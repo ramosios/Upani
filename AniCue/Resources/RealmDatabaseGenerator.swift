@@ -42,10 +42,12 @@ class RealmDatabaseGenerator {
                 }
                 do {
                     let data = try Data(contentsOf: URL(fileURLWithPath: path))
-                    // Decode JikanAnimeListResponse first (same as in AnimeListManager)
-                    let response = try JSONDecoder().decode(JikanAnimeListResponse.self, from: data)
-                    // Convert to RealmAnime objects
-                    let realmAnimes = response.data.map { RealmAnime(from: $0, listType: .downloaded) }
+                    let decoder = JSONDecoder()
+                    
+                    // The JSON files are direct arrays of JikanAnime objects.
+                    let animes = try decoder.decode([JikanAnime].self, from: data)
+                    
+                    let realmAnimes = animes.map { RealmAnime(from: $0, listType: .downloaded) }
 
                     try realm.write {
                         realm.add(realmAnimes, update: .modified)
@@ -58,6 +60,7 @@ class RealmDatabaseGenerator {
             }
 
             logger.info("✅ Realm database created at: \(realmURL.path)")
+            logger.info("Total animes in database: \(realm.objects(RealmAnime.self).count)")
 
         } catch {
             logger.error("❌ Failed to create Realm database: \(error.localizedDescription)")

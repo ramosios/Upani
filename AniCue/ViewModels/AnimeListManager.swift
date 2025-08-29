@@ -9,40 +9,16 @@ class AnimeListManager: ObservableObject {
     @Published var watched: [JikanAnime] = []
     @Published var downloaded: [JikanAnime] = []
 
-    init() {
-        guard let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL else {
-                fatalError("Could not get default Realm file URL.")
-            }
-        let isFirstLaunch = !FileManager.default.fileExists(atPath: defaultRealmURL.path)
+    private init() {
+        setupDefaultRealmIfNeeded()
 
-        if isFirstLaunch {
-            if let bundledRealmURL = Bundle.main.url(forResource: "PreloadedAnimes", withExtension: "realm") {
-            do {
-                try FileManager.default.copyItem(at: bundledRealmURL, to: defaultRealmURL)
-                } catch {
-                    fatalError("Failed to copy preloaded Realm file: \(error)")
-                    }
-                }
-            }
-
-            do {
-                realm = try Realm()
-
-                if isFirstLaunch {
-                    // On first launch, ensure all preloaded animes are in the downloaded list.
-                    let allAnimes = realm.objects(RealmAnime.self)
-                    try realm.write {
-                        for anime in allAnimes {
-                            anime.listType = .downloaded
-                        }
-                    }
-                }
-
-                refreshLists()
-            } catch {
-                fatalError("Failed to initialize Realm: \(error)")
-            }
+        do {
+            realm = try Realm()
+            refreshLists()
+        } catch {
+            fatalError("Failed to initialize Realm: \(error)")
         }
+    }
 
     func addOrUpdateAnime(_ anime: JikanAnime, listType: AnimeListType) {
         objectWillChange.send()
@@ -56,30 +32,33 @@ class AnimeListManager: ObservableObject {
                 realm.add(realmAnime)
             }
         }
-        updateList(list: listType)
+        updateList(for: listType)
     }
 
     func removeAnime(_ anime: JikanAnime) {
         objectWillChange.send()
-        if let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) {
-            try? realm.write {
-                realm.delete(object)
-            }
+        guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return }
+        
+        // Determine which list to update before deleting the object
+        let listToUpdate = object.listType
+        
+        try? realm.write {
+            realm.delete(object)
         }
-        updateList(list: .watched)
+        
+        updateList(for: listToUpdate)
     }
 
     func deleteAll() {
         objectWillChange.send()
-        let allAnimes = realm.objects(RealmAnime.self)
         try? realm.write {
-            realm.delete(allAnimes)
+            realm.deleteAll()
         }
         refreshLists()
     }
 
     func getAnimes(for listType: AnimeListType) -> [JikanAnime] {
-        let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType)
+        let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
         return objects.map { $0.toJikanAnime() }
     }
 
@@ -93,15 +72,39 @@ class AnimeListManager: ObservableObject {
         watched = getAnimes(for: .watched)
         downloaded = getAnimes(for: .downloaded)
     }
-    private func updateList(list: AnimeListType) {
-        if list == .downloaded {
-            downloaded = getAnimes(for: list)
-        } else {
-            watched = getAnimes(for: list)
-            watchlist = getAnimes(for: list)
+    
+    private func updateList(for listType: AnimeListType) {
+        switch listType {
+        case .watchlist:
+            watchlist = getAnimes(for: .watchlist)
+        case .watched:
+            watched = getAnimes(for: .watched)
+        case .downloaded:
+            downloaded = getAnimes(for: .downloaded)
+        }
+    }
+
+    private func setupDefaultRealmIfNeeded() {
+        guard let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL else {
+            fatalError("Could not get default Realm file URL.")
+        }
+
+        let isFirstLaunch = !FileManager.default.fileExists(atPath: defaultRealmURL.path)
+
+        if isFirstLaunch {
+            guard let bundledRealmURL = Bundle.main.url(forResource: "PreloadedAnimes", withExtension: "realm") else {
+                // If the preloaded file isn't in the bundle, we can continue with an empty DB.
+                return
+            }
+            do {
+                try FileManager.default.copyItem(at: bundledRealmURL, to: defaultRealmURL)
+            } catch {
+                fatalError("Failed to copy preloaded Realm file: \(error)")
+            }
         }
     }
 }
+
 enum LocalLoaderError: Error, LocalizedError {
     case fileNotFound(String)
     case dataLoadingFailed(Error)
