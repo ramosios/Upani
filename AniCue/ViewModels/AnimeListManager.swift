@@ -7,7 +7,6 @@ class AnimeListManager: ObservableObject {
 
     @Published var watchlist: [JikanAnime] = []
     @Published var watched: [JikanAnime] = []
-    @Published var downloaded: [JikanAnime] = []
 
     private init() {
         if let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL {
@@ -78,7 +77,6 @@ class AnimeListManager: ObservableObject {
     private func refreshLists() {
         watchlist = getAnimes(for: .watchlist)
         watched = getAnimes(for: .watched)
-        downloaded = getAnimes(for: .downloaded)
     }
     private func updateList(for listType: AnimeListType) {
         switch listType {
@@ -87,7 +85,7 @@ class AnimeListManager: ObservableObject {
         case .watched:
             watched = getAnimes(for: .watched)
         case .downloaded:
-            downloaded = getAnimes(for: .downloaded)
+            break
         }
     }
 
