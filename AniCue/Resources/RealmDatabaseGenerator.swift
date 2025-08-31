@@ -43,10 +43,8 @@ class RealmDatabaseGenerator {
                 do {
                     let data = try Data(contentsOf: URL(fileURLWithPath: path))
                     let decoder = JSONDecoder()
-                    
                     // The JSON files are direct arrays of JikanAnime objects.
                     let animes = try decoder.decode([JikanAnime].self, from: data)
-                    
                     let realmAnimes = animes.map { RealmAnime(from: $0, listType: .downloaded) }
 
                     try realm.write {
