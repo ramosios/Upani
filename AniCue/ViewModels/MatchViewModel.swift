@@ -17,7 +17,7 @@ class MatchViewModel: ObservableObject {
     }
 
     init() {
-        animes = animeList.getAnimes(for: .downloaded)
+        animes = animeList.getSampleDownloads()
     }
 
     private func removeCard(at index: Int) {
