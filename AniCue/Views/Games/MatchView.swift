@@ -13,7 +13,7 @@ struct MatchView: View {
     var body: some View {
         VStack {
             ZStack {
-                if viewModel.animes.isEmpty {
+                if viewModel.animesSample.isEmpty {
                     Text("No more anime!")
                         .font(.headline)
                         .foregroundColor(.gray)

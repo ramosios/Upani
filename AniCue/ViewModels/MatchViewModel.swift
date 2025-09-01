@@ -9,7 +9,6 @@ import SwiftUI
 class MatchViewModel: ObservableObject {
     @ObservedObject var animeList = AnimeListManager.shared
     @Published var animesSample: [JikanAnime] = []
-    @Published var animes: [JikanAnime] = []
     @Published var cardOffsets: [Int: CGSize] = [:]
     @Published var errorMessage: String?
 
