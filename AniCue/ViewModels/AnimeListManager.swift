@@ -75,14 +75,11 @@ class AnimeListManager: ObservableObject {
     }
     func getSampleDownloads() -> [JikanAnime] {
         let downloadedObjects = realm.objects(RealmAnime.self).filter("listType == %@", AnimeListType.downloaded.rawValue)
-        
         var downloadedAnimes: [JikanAnime] = []
         downloadedAnimes.reserveCapacity(100)
-        
         for animeObject in downloadedObjects.prefix(100) {
             downloadedAnimes.append(animeObject.toJikanAnime())
         }
-        
         return downloadedAnimes
     }
     private func refreshLists() {
