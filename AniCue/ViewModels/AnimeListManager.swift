@@ -88,25 +88,6 @@ class AnimeListManager: ObservableObject {
             break
         }
     }
-
-    private static func setupDefaultRealmIfNeeded() {
-        guard let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL else {
-            fatalError("Could not get default Realm file URL.")
-        }
-
-        let isFirstLaunch = !FileManager.default.fileExists(atPath: defaultRealmURL.path)
-
-        if isFirstLaunch {
-            guard let bundledRealmURL = Bundle.main.url(forResource: "PreloadedAnimes", withExtension: "realm") else {
-                return
-            }
-            do {
-                try FileManager.default.copyItem(at: bundledRealmURL, to: defaultRealmURL)
-            } catch {
-                fatalError("Failed to copy preloaded Realm file: \(error)")
-            }
-        }
-    }
 }
 
 enum LocalLoaderError: Error, LocalizedError {
