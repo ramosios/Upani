@@ -68,7 +68,6 @@ class AnimeListManager: ObservableObject {
         let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
         return objects.map { $0.toJikanAnime() }
     }
-    
     func getTopRatedDownloadedAnime() -> [JikanAnime] {
         let downloadedAnime = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
@@ -78,7 +77,15 @@ class AnimeListManager: ObservableObject {
 
         return topAnime.map { $0.toJikanAnime() }
     }
+    func getTopRatedDownloadedAnime(forGenre genre: String) -> [JikanAnime] {
+        let downloadedAnimeForGenre = realm.objects(RealmAnime.self)
+            .filter("listType == %@ AND ANY genres.name == %@", AnimeListType.downloaded.rawValue, genre)
+            .sorted(byKeyPath: "score", ascending: false)
 
+        let topAnime = downloadedAnimeForGenre.prefix(200)
+
+        return topAnime.map { $0.toJikanAnime() }
+    }
     func isAnimeInList(_ anime: JikanAnime, listType: AnimeListType) -> Bool {
         guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return false }
         return object.listType == listType
