@@ -140,7 +140,13 @@ struct AiredPeriod: Codable {
 }
 
 struct JikanEntity: Codable {
+    let malId: Int
     let name: String
+
+    enum CodingKeys: String, CodingKey {
+        case malId = "mal_id"
+        case name
+    }
 }
 
 struct JikanBroadcast: Codable {

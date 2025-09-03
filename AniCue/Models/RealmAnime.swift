@@ -289,12 +289,14 @@ class RealmAiredPeriod: EmbeddedObject {
 // MARK: - Entity Model
 class RealmEntity: EmbeddedObject {
     @Persisted var name: String
+    @Persisted var malId: Int
     convenience init(from entity: JikanEntity) {
         self.init()
         self.name = entity.name
+        self.malId = entity.malId
     }
     func toJikanEntity() -> JikanEntity {
-        return JikanEntity(name: name)
+        return JikanEntity(malId: malId, name: name)
     }
 }
 
