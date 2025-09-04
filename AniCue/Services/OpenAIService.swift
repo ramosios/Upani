@@ -19,9 +19,7 @@ class OpenAIService {
         guard !apiKey.isEmpty else { throw OpenAIError.missingAPIKey }
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else { throw OpenAIError.invalidResponse }
 
-        guard let genreMap = GenreService.getGenresFromUserDefaults() else {
-            throw GenreServiceError.errorFetchingGenres
-        }
+        let genreMap = GenreData.genreDictionary
 
         let systemPrompt = "You are an assistant that returns only a JSON array of genre IDs. No explanation."
         let userPrompt = "Genre list: \(genreMap). User prompt: \"\(prompt)\". Return a JSON array (max 1 genre ID) matching the prompt. Example: [1]."
