@@ -77,27 +77,16 @@ class AnimeListManager: ObservableObject {
 
         return topAnime.map { $0.toJikanAnime() }
     }
-    func getTopRatedDownloadedAnime(forGenre genre: String) -> [JikanAnime] {
-        let downloadedAnimeForGenre = realm.objects(RealmAnime.self)
-            .filter("listType == %@ AND ANY genres.name == %@", AnimeListType.downloaded.rawValue, genre)
+    func getTopRatedDownloadedAnime(forGenreId genreId: Int) -> [JikanAnime] {
+        let results = realm.objects(RealmAnime.self)
+            .filter("listType == %@ AND ANY genres.malId == %@", AnimeListType.downloaded.rawValue, genreId)
             .sorted(byKeyPath: "score", ascending: false)
 
-        let topAnime = downloadedAnimeForGenre.prefix(200)
-
-        return topAnime.map { $0.toJikanAnime() }
+        return results.prefix(200).map { $0.toJikanAnime() }
     }
     func isAnimeInList(_ anime: JikanAnime, listType: AnimeListType) -> Bool {
         guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return false }
         return object.listType == listType
-    }
-    func getSampleDownloads() -> [JikanAnime] {
-        let downloadedObjects = realm.objects(RealmAnime.self).filter("listType == %@", AnimeListType.downloaded.rawValue)
-        var downloadedAnimes: [JikanAnime] = []
-        downloadedAnimes.reserveCapacity(100)
-        for animeObject in downloadedObjects.prefix(100) {
-            downloadedAnimes.append(animeObject.toJikanAnime())
-        }
-        return downloadedAnimes
     }
     private func refreshLists() {
         watchlist = getAnimes(for: .watchlist)
