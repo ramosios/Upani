@@ -2,10 +2,10 @@ import SwiftUI
 
 struct GamesView: View {
     let games = [
-        Game(name: "Game 1", imageName: "UpaniBackground_Image3"),
-        Game(name: "Game 2", imageName: "UpaniBackground_Image3"),
-        Game(name: "Game 3", imageName: "UpaniBackground_Image3"),
-        Game(name: "Game 4", imageName: "UpaniBackground_Image3")
+        Game(name: "Game 1", imageName: "UpaniBackground_Image3", source: .popular),
+        Game(name: "Game 2", imageName: "UpaniBackground_Image3", source: .romance),
+        Game(name: "Game 3", imageName: "UpaniBackground_Image3", source: .shounen),
+        Game(name: "Game 4", imageName: "UpaniBackground_Image3", source: .shoujo)
     ]
     let columns = [
         GridItem(.flexible()),
@@ -18,7 +18,7 @@ struct GamesView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 24) {
                     ForEach(games) { game in
-                        NavigationLink(destination: MatchView()) {
+                        NavigationLink(destination: MatchView(source: game.source)) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 24)
                                     .fill(

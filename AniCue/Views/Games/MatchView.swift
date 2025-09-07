@@ -7,8 +7,14 @@
 import SwiftUI
 
 struct MatchView: View {
-    @StateObject private var viewModel = MatchViewModel()
-    private let cardLimit = 5 // Limit the number of cards rendered at once
+    let source: GameSource
+    @StateObject private var viewModel: MatchViewModel
+    private let cardLimit = 5
+
+    init(source: GameSource) {
+        self.source = source
+        _viewModel = StateObject(wrappedValue: MatchViewModel(source: source))
+    }
 
     var body: some View {
         VStack {
@@ -29,7 +35,7 @@ struct MatchView: View {
                                 viewModel.swipeCard(for: anime)
                             }
                         )
-                        .allowsHitTesting(index == 0) // Only top card is interactive
+                        .allowsHitTesting(index == 0)
                     }
                 }
             }

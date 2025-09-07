@@ -7,6 +7,7 @@
 import SwiftUI
 
 class MatchViewModel: ObservableObject {
+    let source: GameSource
     @ObservedObject var animeList = AnimeListManager.shared
     @Published var animes: [JikanAnime] = []
     @Published var cardOffsets: [Int: CGSize] = [:]
@@ -16,8 +17,19 @@ class MatchViewModel: ObservableObject {
         case left, right
     }
 
-    init() {
-        animes = animeList.getTopRatedDownloadedAnime()
+    init(source: GameSource) {
+        self.source = source
+        switch source {
+        case .popular:
+            animes = animeList.getTopRatedDownloadedAnime()
+        case .shounen:
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 27)
+        case .shoujo:
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 25)
+        case .romance:
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 22)
+        }
+        
     }
 
     private func removeCard(at index: Int) {
