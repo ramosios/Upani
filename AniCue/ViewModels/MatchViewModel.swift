@@ -29,7 +29,6 @@ class MatchViewModel: ObservableObject {
         case .romance:
             animes = animeList.getTopRatedDownloadedAnime(forGenreId: 22)
         }
-        
     }
 
     private func removeCard(at index: Int) {

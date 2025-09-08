@@ -46,6 +46,8 @@ class RealmAnime: Object {
     @Persisted var titleSynonyms = List<String>()
     // Add enum property for list type
     @Persisted var listType: AnimeListType
+    // Persistent combined genres id
+    @Persisted var combinedGenresId: String = ""
     // Conversion methods
     convenience init(from anime: JikanAnime, listType: AnimeListType) {
         self.init()
@@ -91,6 +93,8 @@ class RealmAnime: Object {
         anime.demographics?.forEach { self.demographics.append(RealmEntity(from: $0)) }
         // Copy streaming links
         anime.streaming?.forEach { self.streaming.append(RealmStreaming(from: $0)) }
+        // Update combined genres id after all entities are populated
+        updateCombinedGenresId()
     }
     func toJikanAnime() -> JikanAnime {
         var synonymsArray: [String]?
@@ -154,6 +158,14 @@ class RealmAnime: Object {
             broadcast: broadcast?.toJikanBroadcast(),
             streaming: streamingArray
         )
+    }
+    func getAllGenresIds() -> [Int] {
+        let ids = [genres, themes, demographics].flatMap { $0.map(\.malId) }
+        return Array(Set(ids)).sorted()
+    }
+    func updateCombinedGenresId() {
+        let ids = getAllGenresIds()
+        self.combinedGenresId = ids.map { String($0) }.joined(separator: ",")
     }
 }
 
