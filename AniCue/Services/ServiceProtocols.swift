@@ -12,14 +12,5 @@ protocol OpenAIServiceProtocol: AnyObject {
 }
 
 protocol JikanServiceProtocol {
-    func fetchFilteredAnime(
-            genreIds: [Int],
-            excludedMalIds: [Int],
-            startDate: String,
-            endDate: String,
-            limit: Int,
-            page: Int,
-            minimumScore: Double,
-            type: String
-        ) async throws -> [JikanAnime]
+    
 }

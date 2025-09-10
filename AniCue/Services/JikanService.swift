@@ -14,40 +14,6 @@ struct JikanService {
         self.session = session
     }
 
-    func fetchFilteredAnime(
-        genreIds: [Int],
-        excludedMalIds: [Int] = [],
-        startDate: String,
-        endDate: String,
-        limit: Int,
-        page: Int,
-        minimumScore: Double,
-        type: String
-    ) async throws -> [JikanAnime] {
-        let genreQuery = genreIds.map(String.init).joined(separator: ",")
-        var urlString = "\(baseURL)/anime?start_date=\(startDate)&end_date=\(endDate)&genres=\(genreQuery)&order_by=score&sort=desc&limit=\(limit)&page=\(page)"
-        if type.isEmpty == false {
-            urlString += "&type=\(type.capitalized)"
-        }
-
-        guard let url = URL(string: urlString) else { throw JikanAPIError.invalidURL }
-
-        let (data, response) = try await session.data(from: url)
-        guard let httpResp = response as? HTTPURLResponse, (200...299).contains(httpResp.statusCode) else {
-            throw JikanAPIError.requestFailed
-        }
-
-        do {
-            let decoded = try JSONDecoder().decode(JikanAnimeListResponse.self, from: data)
-            return decoded.data.filter {
-                !excludedMalIds.contains($0.malId) &&
-                ($0.score ?? 0) >= minimumScore
-            }
-        } catch {
-            throw JikanAPIError.decodingFailed
-        }
-    }
-
     func searchAnime(title: String) async throws -> [JikanAnime] {
         let query = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = "\(baseURL)/anime?q=\(query)&limit=10"

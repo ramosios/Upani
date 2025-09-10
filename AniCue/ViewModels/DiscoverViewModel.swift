@@ -9,6 +9,7 @@ import SwiftUI
 
 @MainActor
 class DiscoverViewModel: ObservableObject {
+    @ObservedObject var animeList = AnimeListManager.shared
     @Published var animes: [JikanAnime] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -39,22 +40,7 @@ class DiscoverViewModel: ObservableObject {
                 throw NSError(domain: "Genre Fetch Error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch genres: \(error.localizedDescription)"])
             }
 
-            let filteredAnimes: [JikanAnime]
-            do {
-                filteredAnimes = try await jikaService.fetchFilteredAnime(
-                    genreIds: genres,
-                    excludedMalIds: animesToAvoid,
-                    startDate: userPreferences.startDate,
-                    endDate: userPreferences.endDate,
-                    limit: 25,
-                    page: 1,
-                    minimumScore: userPreferences.minimumScore,
-                    type: userPreferences.format
-                )
-            } catch {
-                throw NSError(domain: "Anime Fetch Error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch filtered anime: \(error.localizedDescription)"])
-            }
-
+            let filteredAnimes = animeList.getTopRatedDownloadedAnime(forGenreId: genres.first ?? 0)
             do {
                 let topAnimes = try await openAIService.recommendTopAnime(from: filteredAnimes, prompt: prompt)
                 self.animes = topAnimes
