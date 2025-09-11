@@ -102,10 +102,9 @@ struct DiscoverView: View {
         prompt = ""
         inputIsFocused = false
         Task {
-            await viewModel.formatDataApiCalls(
+            await viewModel.getRecommendations(
                 for: messageToSend,
-                preferences: userPreferences,
-                animeList: animeList
+                userPreferences: formatUserPreference(from: userPreferences.selectedAnswers)
             )
         }
     }

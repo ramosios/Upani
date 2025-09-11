@@ -21,13 +21,7 @@ class DiscoverViewModel: ObservableObject {
         self.openAIService = openAIService
         self.jikaService = jikaService
     }
-    func formatDataApiCalls(for prompt: String,preferences: UserPreferencesViewModel,animeList: AnimeListManager) async {
-        // Gets ids to avoid based on user's favorites and watched animes
-        let avoid = (animeList.watchlist + animeList.watched).map(\.malId)
-        let preference = formatUserPreference(from: preferences.selectedAnswers)
-        await getRecommendations(for: prompt, userPreferences: preference, avoiding: avoid)
-    }
-    func getRecommendations(for prompt: String, userPreferences: (startDate: String, endDate: String,format: String,minimumScore: Double), avoiding animesToAvoid: [Int]) async {
+    func getRecommendations(for prompt: String, userPreferences: (startDate: String, endDate: String,format: String,minimumScore: Double)) async {
         isLoading = true
         errorMessage = nil
         animes = []
