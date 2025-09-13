@@ -70,7 +70,6 @@ class OpenAIService {
 
     func recommendTopAnime(from animes: [JikanAnime], prompt: String) async throws -> [JikanAnime] {
         guard !apiKey.isEmpty else { throw OpenAIError.missingAPIKey }
-        
         if animes.count <= 5 {
             return animes
         }

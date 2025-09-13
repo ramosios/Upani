@@ -12,5 +12,4 @@ protocol OpenAIServiceProtocol: AnyObject {
 }
 
 protocol JikanServiceProtocol {
-    
 }
