@@ -34,7 +34,7 @@ class DiscoverViewModel: ObservableObject {
                 throw NSError(domain: "Genre Fetch Error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch genres: \(error.localizedDescription)"])
             }
 
-            let filteredAnimes = animeList.getTopRatedDownloadedAnime(forGenreId: genres.first ?? 0, numberofResults: 50)
+            let filteredAnimes = animeList.getTopRatedDownloadedAnime(forGenreId: genres.first ?? 0, numberOfResults: 50)
             do {
                 let topAnimes = try await openAIService.recommendTopAnime(from: filteredAnimes, prompt: prompt)
                 self.animes = topAnimes
