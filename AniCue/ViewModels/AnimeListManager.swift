@@ -1,10 +1,11 @@
 import Foundation
 import RealmSwift
+import SwiftUI
 
 class AnimeListManager: ObservableObject {
     static let shared = AnimeListManager()
     private let realm: Realm
-
+    @ObservedObject var userPreferences = UserPreferencesViewModel.shared
     @Published var watchlist: [JikanAnime] = []
     @Published var watched: [JikanAnime] = []
 
@@ -69,6 +70,7 @@ class AnimeListManager: ObservableObject {
         return objects.map { $0.toJikanAnime() }
     }
     func getTopRatedDownloadedAnime(forGenreId genreId: Int? = nil, numberOfResults: Int) -> [JikanAnime] {
+        var filters = formatUserPreference(from: userPreferences.selectedAnswers)
         var results = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
 

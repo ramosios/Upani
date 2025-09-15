@@ -15,13 +15,11 @@ class DiscoverViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var noRecommendations = false
     private let openAIService: OpenAIServiceProtocol
-    private let jikaService: JikanServiceProtocol
     init(openAIService: OpenAIServiceProtocol = OpenAIService(),
          jikaService: JikanServiceProtocol = JikanService()) {
         self.openAIService = openAIService
-        self.jikaService = jikaService
     }
-    func getRecommendations(for prompt: String, userPreferences: (startDate: String, endDate: String,format: String,minimumScore: Double)) async {
+    func getRecommendations(for prompt: String) async {
         isLoading = true
         errorMessage = nil
         animes = []

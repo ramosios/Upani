@@ -3,7 +3,6 @@ import SwiftUI
 struct DiscoverView: View {
     @StateObject private var viewModel = DiscoverViewModel()
     @ObservedObject var animeList = AnimeListManager.shared
-    @ObservedObject var userPreferences = UserPreferencesViewModel.shared
     @State private var prompt = ""
     @State private var submittedPrompt: String?
     @FocusState private var inputIsFocused: Bool
@@ -102,10 +101,7 @@ struct DiscoverView: View {
         prompt = ""
         inputIsFocused = false
         Task {
-            await viewModel.getRecommendations(
-                for: messageToSend,
-                userPreferences: formatUserPreference(from: userPreferences.selectedAnswers)
-            )
+            await viewModel.getRecommendations(  for: messageToSend)
         }
     }
 
