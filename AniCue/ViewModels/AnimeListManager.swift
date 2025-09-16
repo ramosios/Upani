@@ -5,7 +5,6 @@ import SwiftUI
 class AnimeListManager: ObservableObject {
     static let shared = AnimeListManager()
     private let realm: Realm
-    @ObservedObject var userPreferences = UserPreferencesViewModel.shared
     @Published var watchlist: [JikanAnime] = []
     @Published var watched: [JikanAnime] = []
 
@@ -69,14 +68,19 @@ class AnimeListManager: ObservableObject {
         let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
         return objects.map { $0.toJikanAnime() }
     }
-    func getTopRatedDownloadedAnime(forGenreId genreId: Int? = nil, numberOfResults: Int) -> [JikanAnime] {
-        var filters = formatUserPreference(from: userPreferences.selectedAnswers)
+    func getTopRatedDownloadedAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int) -> [JikanAnime] {
         var results = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
 
         if let genreId = genreId {
             let genreIdString = String(genreId)
             results = results.filter("combinedGenresId CONTAINS %@", genreIdString)
+        }
+        if let filterAnswers = filterAnswers {
+            let filters = formatUserPreference(from: filterAnswers)
+            if !filters.format.isEmpty {
+                results = results.filter("type == %@", filters.format)
+            }
         }
 
         let sortedResults = results.sorted(byKeyPath: "score", ascending: false)
