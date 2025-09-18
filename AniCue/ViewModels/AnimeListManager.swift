@@ -81,6 +81,9 @@ class AnimeListManager: ObservableObject {
             if !filters.format.isEmpty {
                 results = results.filter("type == %@", filters.format)
             }
+            if filters.minimumScore != 5.0 {
+                results = results.filter("score >= %@", filters.minimumScore)
+            }
         }
 
         let sortedResults = results.sorted(byKeyPath: "score", ascending: false)

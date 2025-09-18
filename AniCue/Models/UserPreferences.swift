@@ -38,12 +38,12 @@ private func normalizedFormat(for includeMovies: String) -> String {
 
 func formatUserPreference(from answers: [String]) -> (startDate: String, endDate: String, format: String, minimumScore: Double) {
     guard answers.count >= 3 else {
-        return ("", "", "", 6.0)
+        return ("", "", "", 5.0)
     }
 
     let releasePref = answers[0].lowercased()
     let includeMovies = answers[1].lowercased()
-    let minimunScore = Double(answers[2]) ?? 6.0
+    let minimunScore = Double(answers[2]) ?? 5.0
 
     let dateRangeResult = dateRange(for: releasePref)
     let formatResult = normalizedFormat(for: includeMovies)
