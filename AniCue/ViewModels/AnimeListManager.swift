@@ -84,6 +84,9 @@ class AnimeListManager: ObservableObject {
             if filters.minimumScore != 5.0 {
                 results = results.filter("score >= %@", filters.minimumScore)
             }
+            if !filters.startDate.isEmpty && !filters.endDate.isEmpty {
+                results = results.filter("aired.from >= %@ AND aired.from <= %@", filters.startDate, filters.endDate)
+            }
         }
 
         let sortedResults = results.sorted(byKeyPath: "score", ascending: false)
