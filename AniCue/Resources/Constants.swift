@@ -1,12 +1,14 @@
 //
-//  GenreData.swift
+//  Constants.swift
 //  AniCue
 //
-//  Created by Jorge Ramos on 03/09/25.
+//  Created by Jorge Ramos on 20/09/25.
 //
 import Foundation
 
-struct GenreData {
+struct Constants {
+    static let resultsPrompt = 50
+    static let resultsMatch = 200
     static let genreDictionary: [Int: String] = [
         1: "Action",
         2: "Adventure",
