@@ -23,11 +23,11 @@ class MatchViewModel: ObservableObject {
         case .popular:
             animes = animeList.getTopRatedDownloadedAnime(numberOfResults: Constants.resultsMatch)
         case .shounen:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 27, numberOfResults: Constants.resultsMatch)
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Shounen"], numberOfResults: Constants.resultsMatch)
         case .shoujo:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 25, numberOfResults: Constants.resultsMatch)
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Shoujo"], numberOfResults: Constants.resultsMatch)
         case .romance:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: 22, numberOfResults: Constants.resultsMatch)
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Romance"], numberOfResults: Constants.resultsMatch)
         }
     }
 
