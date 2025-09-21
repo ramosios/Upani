@@ -9,6 +9,7 @@ import Foundation
 struct Constants {
     static let resultsPrompt = 50
     static let resultsMatch = 200
+    static let minimumFilterScore = 5.0
     static let genreDictionary: [Int: String] = [
         1: "Action",
         2: "Adventure",

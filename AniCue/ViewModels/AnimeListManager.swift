@@ -81,7 +81,7 @@ class AnimeListManager: ObservableObject {
             if !filters.format.isEmpty {
                 results = results.filter("type == %@", filters.format)
             }
-            if filters.minimumScore != 5.0 {
+            if filters.minimumScore != Constants.minimumFilterScore {
                 results = results.filter("score >= %@", filters.minimumScore)
             }
             if !filters.startDate.isEmpty && !filters.endDate.isEmpty {
