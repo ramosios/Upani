@@ -6,6 +6,9 @@ struct CardView: View {
 
     var onRemove: () -> Void
 
+    @State private var isShowingDetail = false
+    @State private var isDragging = false
+
     var body: some View {
         ZStack {
             // Card Image and Background
@@ -84,6 +87,7 @@ struct CardView: View {
             DragGesture()
                 .onChanged { gesture in
                     offset = gesture.translation
+                    isDragging = true
                 }
                 .onEnded { gesture in
                     withAnimation(.spring()) {
@@ -93,7 +97,16 @@ struct CardView: View {
                             offset = .zero
                         }
                     }
+                    isDragging = false
                 }
         )
+        .onTapGesture {
+            if !isDragging {
+                isShowingDetail = true
+            }
+        }
+        .navigationDestination(isPresented: $isShowingDetail) {
+            AnimeDetailView(anime: anime)
+        }
     }
 }
