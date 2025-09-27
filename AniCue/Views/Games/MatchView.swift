@@ -7,13 +7,13 @@
 import SwiftUI
 
 struct MatchView: View {
-    let source: GameSource
+    let source: String
     @StateObject private var viewModel: MatchViewModel
     private let cardLimit = 5
 
-    init(source: GameSource) {
+    init(source: String) {
         self.source = source
-        _viewModel = StateObject(wrappedValue: MatchViewModel(source: source))
+        _viewModel = StateObject(wrappedValue: MatchViewModel(name: source))
     }
 
     var body: some View {

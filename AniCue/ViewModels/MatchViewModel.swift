@@ -7,7 +7,7 @@
 import SwiftUI
 
 class MatchViewModel: ObservableObject {
-    let source: GameSource
+    let source: String
     @ObservedObject var animeList = AnimeListManager.shared
     @Published var animes: [JikanAnime] = []
     @Published var cardOffsets: [Int: CGSize] = [:]
@@ -17,17 +17,13 @@ class MatchViewModel: ObservableObject {
         case left, right
     }
 
-    init(source: GameSource) {
-        self.source = source
+    init(name: String) {
+        self.source = name
         switch source {
-        case .popular:
+        case "Popular":
             animes = animeList.getTopRatedDownloadedAnime(numberOfResults: Constants.resultsMatch)
-        case .shounen:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Shounen"], numberOfResults: Constants.resultsMatch)
-        case .shoujo:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Shoujo"], numberOfResults: Constants.resultsMatch)
-        case .romance:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary["Romance"], numberOfResults: Constants.resultsMatch)
+        default:
+            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary[source], numberOfResults: Constants.resultsMatch)
         }
     }
 
