@@ -4,6 +4,16 @@ struct Constants {
     static let resultsPrompt = 50
     static let resultsMatch = 200
     static let minimumFilterScore = 5.0
+    static let games = [
+        Game(name: "Popular", imageName: "UpaniBackground_Image3"),
+        Game(name: "Romance", imageName: "UpaniBackground_Image3"),
+        Game(name: "Shounen", imageName: "UpaniBackground_Image3"),
+        Game(name: "Shoujo", imageName: "UpaniBackground_Image3"),
+        Game(name: "Seinen", imageName: "UpaniBackground_Image3"),
+        Game(name: "Sports", imageName: "UpaniBackground_Image3"),
+        Game(name: "Comedy", imageName: "UpaniBackground_Image3"),
+        Game(name: "Ecchi", imageName: "UpaniBackground_Image3")
+    ]
     static let genreDictionary: [String: Int] = [
         "Action": 1,
         "Adventure": 2,

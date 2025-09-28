@@ -1,13 +1,7 @@
 import SwiftUI
 
 struct GamesView: View {
-    let games = [
-        Game(name: "Popular", imageName: "UpaniBackground_Image3"),
-        Game(name: "Romance", imageName: "UpaniBackground_Image3"),
-        Game(name: "Shounen", imageName: "UpaniBackground_Image3"),
-        Game(name: "Shoujo", imageName: "UpaniBackground_Image3"),
-        Game(name: "Seinen", imageName: "UpaniBackground_Image3")
-    ]
+    let games = Constants.games
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
