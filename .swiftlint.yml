@@ -15,6 +15,7 @@ disabled_rules:
   - comma
   - large_tuple
   - line_length
+  - discouraged_optional_boolean
 opt_in_rules:
   - empty_count
   - empty_string

@@ -5,6 +5,7 @@ struct Constants {
     static let resultsMatch = 200
     static let minimumFilterScore = 5.0
     static let games = [
+        Game(name: "Best Rated", imageName: "UpaniBackground_Image3"),
         Game(name: "Popular", imageName: "UpaniBackground_Image3"),
         Game(name: "Romance", imageName: "UpaniBackground_Image3"),
         Game(name: "Shounen", imageName: "UpaniBackground_Image3"),

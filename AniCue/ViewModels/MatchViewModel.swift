@@ -21,9 +21,11 @@ class MatchViewModel: ObservableObject {
         self.source = name
         switch source {
         case "Popular":
-            animes = animeList.getTopRatedDownloadedAnime(numberOfResults: Constants.resultsMatch)
+            animes = animeList.getFilteredAnime(numberOfResults: Constants.resultsMatch,filterByPopularity: true)
+        case "TopRated":
+            animes = animeList.getFilteredAnime(numberOfResults: Constants.resultsMatch)
         default:
-            animes = animeList.getTopRatedDownloadedAnime(forGenreId: Constants.genreDictionary[source], numberOfResults: Constants.resultsMatch)
+            animes = animeList.getFilteredAnime(forGenreId: Constants.genreDictionary[source], numberOfResults: Constants.resultsMatch)
         }
     }
 
