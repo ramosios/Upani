@@ -68,7 +68,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				AniCueApp.swift,
-				AppDelegate.swift,
 				Assets.xcassets,
 				Models/Game.swift,
 				Models/GeminiResponse.swift,
@@ -113,8 +112,8 @@
 				Views/ReusableViews/ErrorBanner.swift,
 				Views/ReusableViews/ImageLoader.swift,
 				Views/ReusableViews/UpaniAnimation.swift,
-				Views/Tab/ContentView.swift,
 				Views/Tab/CustomTabBarView.swift,
+				Views/Tab/TabBarView.swift,
 				Views/WatchlistView.swift,
 			);
 			target = C123CCFC2DFE2DB700B27340 /* AniCue */;
@@ -123,7 +122,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				AniCueApp.swift,
-				AppDelegate.swift,
 				Assets.xcassets,
 				Info.plist,
 				Models/Game.swift,
@@ -169,8 +167,8 @@
 				Views/ReusableViews/ErrorBanner.swift,
 				Views/ReusableViews/ImageLoader.swift,
 				Views/ReusableViews/UpaniAnimation.swift,
-				Views/Tab/ContentView.swift,
 				Views/Tab/CustomTabBarView.swift,
+				Views/Tab/TabBarView.swift,
 				Views/WatchlistView.swift,
 			);
 			target = C123CD0C2DFE2DB800B27340 /* AniCueTests */;

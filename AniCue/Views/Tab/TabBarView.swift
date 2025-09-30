@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct TabBarView: View {
     @State private var selectedTab: CustomTabBarView.Tab = .discover
 
     var body: some View {

@@ -3,7 +3,6 @@ import SwiftUI
 
 @main
 struct AniCueApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var isShowingLaunchAnimation = true
 
     var body: some Scene {
@@ -12,7 +11,7 @@ struct AniCueApp: App {
                 if isShowingLaunchAnimation {
                     LaunchScreenView()
                 } else {
-                    ContentView()
+                    TabBarView()
                         .accentColor(.teal)
                 }
             }
