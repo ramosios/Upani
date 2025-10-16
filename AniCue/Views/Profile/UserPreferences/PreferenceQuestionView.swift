@@ -24,6 +24,7 @@ struct PreferenceQuestionView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
             }
+            .padding(.trailing, 40)
             if let options = options {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 12)], spacing: 12) {
                     ForEach(options, id: \.self) { answer in
@@ -84,7 +85,9 @@ struct PreferenceQuestionView: View {
                         .transition(.opacity)
                         .zIndex(1)
                 }
-            }, alignment: .topTrailing
+            }
+            .padding([.top, .trailing], 8),
+            alignment: .topTrailing
         )
     }
 }
