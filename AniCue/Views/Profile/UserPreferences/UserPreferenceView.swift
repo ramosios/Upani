@@ -9,19 +9,23 @@ struct UserPreferenceView: View {
         ("Should Movies and OVAs be included in your results?", "magnifyingglass"),
         ("Set the minimum score for your recommendations", "star")
     ]
+
     private let options: [[String]] = [
         ["Recent", "2022-2010", "2000s", "1990s or earlier", "No preference"],
         ["Yes", "No"]
     ]
+
     private let explanations = [
         "Select the time period of anime releases you are interested in.",
         "Choose whether to include Movies and OVAs in your search results.",
         "Anime below your selected score will not be recommended."
     ]
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
+                    // Q1
                     PreferenceQuestionView(
                         icon: questions[0].1,
                         question: questions[0].0,
@@ -34,6 +38,8 @@ struct UserPreferenceView: View {
                         ),
                         onSelect: { _ in viewModel.saveAnswers() }
                     )
+
+                    // Q2
                     PreferenceQuestionView(
                         icon: questions[1].1,
                         question: questions[1].0,
@@ -46,6 +52,8 @@ struct UserPreferenceView: View {
                         ),
                         onSelect: { _ in viewModel.saveAnswers() }
                     )
+
+                    // Slider
                     MinimumScoreSliderView(
                         icon: questions[2].1,
                         question: questions[2].0,
@@ -62,5 +70,12 @@ struct UserPreferenceView: View {
             .navigationTitle("Your Preferences")
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
         }
+        // Global tap to dismiss all 
+        .contentShape(Rectangle())
+        .simultaneousGesture(
+            TapGesture().onEnded {
+                showingHelpIndex = nil
+            }
+        )
     }
 }
