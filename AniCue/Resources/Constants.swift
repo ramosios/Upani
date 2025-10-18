@@ -15,6 +15,22 @@ struct Constants {
         Game(name: "Comedy", imageName: "UpaniBackground_Image3"),
         Game(name: "Ecchi", imageName: "UpaniBackground_Image3")
     ]
+    static let userPrefQuestions: [(question: String, icon: String)] = [
+           ("Which release period are you looking for in anime?", "calendar"),
+           ("Should Movies and OVAs be included in your results?", "magnifyingglass"),
+           ("Set the minimum score for your recommendations", "star")
+       ]
+
+       static let userPrefOptions: [[String]] = [
+           ["Recent", "2022-2010", "2000s", "1990s or earlier", "No preference"],
+           ["Yes", "No"]
+       ]
+
+       static let userPrefExplanations: [String] = [
+           "Select the time period of anime releases you are interested in.",
+           "Choose whether to include Movies and OVAs in your search results.",
+           "Anime below your selected score will not be recommended."
+       ]
     static let genreDictionary: [String: Int] = [
         "Action": 1,
         "Adventure": 2,
