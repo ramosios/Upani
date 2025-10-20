@@ -1,12 +1,29 @@
 import SwiftUI
 
+enum GameListSource {
+    case selectGame
+}
+
 struct GamesView: View {
-    let games = Constants.games
+    let source: GameListSource
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     @State private var animate = false
+
+    var title: String {
+        switch source {
+        case .selectGame:
+            return "Select a Game"
+        }
+    }
+    var games: [Game] {
+        switch source {
+        case .selectGame:
+            return Constants.games
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -20,7 +37,7 @@ struct GamesView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Select a Game")
+            .navigationTitle(title)
             .onAppear { animate = true }
         }
         .accentColor(.teal)
