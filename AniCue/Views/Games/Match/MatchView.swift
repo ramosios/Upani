@@ -25,7 +25,7 @@ struct MatchView: View {
                         .foregroundColor(.gray)
                 } else {
                     ForEach(Array(viewModel.animes.prefix(cardLimit).enumerated().reversed()), id: \.element.id) { index, anime in
-                        CardView(
+                        MatchCardView(
                             anime: .constant(anime),
                             offset: Binding(
                                 get: { viewModel.cardOffsets[anime.id] ?? .zero },

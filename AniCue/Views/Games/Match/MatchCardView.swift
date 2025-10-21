@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CardView: View {
+struct MatchCardView: View {
     @Binding var anime: JikanAnime
     @Binding var offset: CGSize
 
