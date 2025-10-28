@@ -5,9 +5,10 @@
 //  Created by Jorge Ramos on 21/10/25.
 //
 import SwiftUI
+
 struct MenuCardView: View {
     let menuItem: MenuItem
-    @Binding var animate: Bool
+    @State private var isAnimating = false
 
     var body: some View {
         ZStack {
@@ -25,12 +26,7 @@ struct MenuCardView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 180)
-                    .scaleEffect(animate ? 1.05 : 1.0)
-                    .animation(
-                        .easeInOut(duration: 1.2)
-                            .repeatForever(autoreverses: true),
-                        value: animate
-                    )
+                    .scaleEffect(isAnimating ? 1.05 : 1.0)
                 Text(menuItem.name)
                     .font(.title2)
                     .fontWeight(.bold)
@@ -40,5 +36,10 @@ struct MenuCardView: View {
             .padding()
         }
         .frame(height: 250)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
+                isAnimating = true
+            }
+        }
     }
 }

@@ -5,7 +5,6 @@ struct MatchMenuView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    @State private var animate = false
 
     let menuItemMatching = Constants.matchingMenuItem
 
@@ -15,14 +14,13 @@ struct MatchMenuView: View {
                 LazyVGrid(columns: columns, spacing: 24) {
                     ForEach(menuItemMatching) { item in
                         NavigationLink(destination: MatchView(source: item.name)) {
-                            MenuCardView(menuItem: item, animate: $animate)
+                            MenuCardView(menuItem: item)
                         }
                     }
                 }
                 .padding()
             }
             .navigationTitle("Select a Category")
-            .onAppear { animate = true }
         }
         .accentColor(.teal)
     }
