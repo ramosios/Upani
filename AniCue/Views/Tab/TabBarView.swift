@@ -23,7 +23,7 @@ struct TabBarView: View {
                 .tabItem {
                     Label(CustomTabBarView.Tab.watchlist.title, systemImage: CustomTabBarView.Tab.watchlist.iconName)
                 }
-            MatchMenuView()
+            MenuView(sourceType: .mainMenu)
                 .tag(CustomTabBarView.Tab.games)
                 .tabItem {
                     Label(CustomTabBarView.Tab.games.title, systemImage: CustomTabBarView.Tab.games.iconName)
