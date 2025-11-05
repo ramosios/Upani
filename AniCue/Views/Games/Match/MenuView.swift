@@ -28,7 +28,14 @@ struct MenuView: View {
             case .match:
                 MatchView(source: item.name)
             case .mainMenu:
-                MenuView(sourceType: .match)
+                switch item.name {
+                case "Matching":
+                    MenuView(sourceType: .match)
+                case "Search":
+                    SearchView()
+                default:
+                    MenuView(sourceType: .mainMenu)
+                }
             }
         }
     }
