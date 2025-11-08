@@ -26,9 +26,9 @@ struct SearchView: View {
                         .disableAutocorrection(true)
                     }
                     .padding(12)
-                    .background(Color.white.opacity(0.9))
+                    .background(Color(.secondarySystemBackground))
                     .cornerRadius(16)
-                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                    .shadow(color: Color.primary.opacity(0.08), radius: 4, x: 0, y: 2)
                     .padding(.horizontal)
 
                     // Search Results
@@ -37,9 +37,9 @@ struct SearchView: View {
                         VStack {
                             Image(systemName: "exclamationmark.triangle")
                                 .font(.system(size: 40))
-                                .foregroundColor(.gray.opacity(0.6))
+                                .foregroundColor(Color.secondary)
                             Text("No results found")
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color.secondary)
                                 .font(.headline)
                         }
                         Spacer()
@@ -70,9 +70,9 @@ struct SearchView: View {
                                     }
                                 )
                                 .padding(8)
-                                .background(Color.white.opacity(0.8))
+                                .background(Color(.secondarySystemBackground))
                                 .cornerRadius(12)
-                                .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
+                                .shadow(color: Color.primary.opacity(0.04), radius: 2, x: 0, y: 1)
                             }
                             .listRowBackground(Color.clear)
                         }
