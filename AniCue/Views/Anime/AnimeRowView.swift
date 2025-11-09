@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AnimeRowView: View {
-    let anime: JikanAnime
+    let anime: Anime
     let isWatchlisted: Bool
     let isWatched: Bool
     let onToggleWatchlisted: () -> Void

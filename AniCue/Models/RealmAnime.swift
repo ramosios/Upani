@@ -49,7 +49,7 @@ class RealmAnime: Object {
     // Persistent combined genres id
     @Persisted var combinedGenresId: String = ""
     // Conversion methods
-    convenience init(from anime: JikanAnime, listType: AnimeListType) {
+    convenience init(from anime: Anime, listType: AnimeListType) {
         self.init()
         self.malId = anime.malId
         self.listType = listType
@@ -96,7 +96,7 @@ class RealmAnime: Object {
         // Update combined genres id after all entities are populated
         updateCombinedGenresId()
     }
-    func toJikanAnime() -> JikanAnime {
+    func toJikanAnime() -> Anime {
         var synonymsArray: [String]?
         if !titleSynonyms.isEmpty {
             synonymsArray = Array(titleSynonyms)
@@ -129,7 +129,7 @@ class RealmAnime: Object {
         if !streaming.isEmpty {
             streamingArray = streaming.map { $0.toJikanStreaming() }
         }
-        return JikanAnime(
+        return Anime(
             malId: malId,
             title: title,
             titleEnglish: titleEnglish,

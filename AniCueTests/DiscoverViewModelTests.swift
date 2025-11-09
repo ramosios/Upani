@@ -13,7 +13,7 @@ final class MockOpenAIService: OpenAIServiceProtocol {
     var mockTitles: [String] = []
     var shouldFail = false
 
-    func fetchAnimeTitles(prompt: String, userPreferences: [String], excluding moviesToAvoid: [JikanAnime]) async throws -> [String] {
+    func fetchAnimeTitles(prompt: String, userPreferences: [String], excluding moviesToAvoid: [Anime]) async throws -> [String] {
         if shouldFail {
             throw OpenAIError.serverError("Mock OpenAI failure")
         }
@@ -22,10 +22,10 @@ final class MockOpenAIService: OpenAIServiceProtocol {
 }
 
 final class MockJikanService: JikanServiceProtocol {
-    var mockAnimes: [JikanAnime] = []
+    var mockAnimes: [Anime] = []
     var shouldFail = false
 
-    func fetchAnimes(for titles: [String]) async throws -> [JikanAnime] {
+    func fetchAnimes(for titles: [String]) async throws -> [Anime] {
         if shouldFail {
             throw JikanBatchError.serverError(title: "Mock", message: "Mock Jikan failure")
         }
@@ -43,7 +43,7 @@ final class DiscoverViewModelTests: XCTestCase {
 
         mockAI.mockTitles = ["Death Note"]
         mockJikan.mockAnimes = [
-            JikanAnime(
+            Anime(
                 malId: 1,
                 title: "Death Note",
                 titleEnglish: nil,

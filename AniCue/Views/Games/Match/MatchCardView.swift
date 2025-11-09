@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MatchCardView: View {
-    @Binding var anime: JikanAnime
+    @Binding var anime: Anime
     @Binding var offset: CGSize
 
     var onRemove: () -> Void

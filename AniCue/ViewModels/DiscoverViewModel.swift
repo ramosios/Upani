@@ -10,7 +10,7 @@ import SwiftUI
 @MainActor
 class DiscoverViewModel: ObservableObject {
     @ObservedObject var animeList = AnimeListManager.shared
-    @Published var animes: [JikanAnime] = []
+    @Published var animes: [Anime] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var noRecommendations = false

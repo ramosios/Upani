@@ -8,7 +8,7 @@ import Foundation
 
 protocol OpenAIServiceProtocol: AnyObject {
     func fetchGenres(from prompt: String) async throws -> [Int]
-    func recommendTopAnime(from animes: [JikanAnime], prompt: String) async throws -> [JikanAnime]
+    func recommendTopAnime(from animes: [Anime], prompt: String) async throws -> [Anime]
 }
 
 protocol JikanServiceProtocol {

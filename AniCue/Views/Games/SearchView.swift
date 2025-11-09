@@ -9,7 +9,7 @@ import SwiftUI
 struct SearchView: View {
     @ObservedObject var animeList = AnimeListManager.shared
     @State private var searchText: String = ""
-    @State private var filteredAnimes: [JikanAnime] = []
+    @State private var filteredAnimes: [Anime] = []
 
     var body: some View {
             NavigationStack {

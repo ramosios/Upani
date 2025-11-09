@@ -5,8 +5,8 @@ import SwiftUI
 class AnimeListManager: ObservableObject {
     static let shared = AnimeListManager()
     private let realm: Realm
-    @Published var watchlist: [JikanAnime] = []
-    @Published var watched: [JikanAnime] = []
+    @Published var watchlist: [Anime] = []
+    @Published var watched: [Anime] = []
 
     private init() {
         if let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL {
@@ -31,7 +31,7 @@ class AnimeListManager: ObservableObject {
         }
     }
 
-    func addOrUpdateAnime(_ anime: JikanAnime, listType: AnimeListType) {
+    func addOrUpdateAnime(_ anime: Anime, listType: AnimeListType) {
         objectWillChange.send()
         if let existing = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) {
             try? realm.write {
@@ -46,7 +46,7 @@ class AnimeListManager: ObservableObject {
         updateList(for: listType)
     }
 
-    func removeAnime(_ anime: JikanAnime) {
+    func removeAnime(_ anime: Anime) {
         objectWillChange.send()
         guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return }
         let listToUpdate = object.listType
@@ -64,11 +64,11 @@ class AnimeListManager: ObservableObject {
         refreshLists()
     }
 
-    func getAnimes(for listType: AnimeListType) -> [JikanAnime] {
+    func getAnimes(for listType: AnimeListType) -> [Anime] {
         let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
         return objects.map { $0.toJikanAnime() }
     }
-    func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil) -> [JikanAnime] {
+    func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil) -> [Anime] {
         var results = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
 
@@ -92,7 +92,7 @@ class AnimeListManager: ObservableObject {
         let sortedResults = results.sorted(byKeyPath: sortKey, ascending: false)
         return Array(sortedResults.prefix(numberOfResults)).map { $0.toJikanAnime() }
     }
-    func isAnimeInList(_ anime: JikanAnime, listType: AnimeListType) -> Bool {
+    func isAnimeInList(_ anime: Anime, listType: AnimeListType) -> Bool {
         guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return false }
         return object.listType == listType
     }

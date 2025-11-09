@@ -68,7 +68,7 @@ class OpenAIService {
         throw OpenAIError.decodingFailed
     }
 
-    func recommendTopAnime(from animes: [JikanAnime], prompt: String) async throws -> [JikanAnime] {
+    func recommendTopAnime(from animes: [Anime], prompt: String) async throws -> [Anime] {
         guard !apiKey.isEmpty else { throw OpenAIError.missingAPIKey }
         if animes.count <= 5 {
             return animes

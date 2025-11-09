@@ -1,11 +1,11 @@
 import Foundation
 
-struct JikanAnimeResponse: Codable {
-    let data: JikanAnime
+struct AnimeResponse: Codable {
+    let data: Anime
 }
 
 struct JikanAnimeListResponse: Codable {
-    let data: [JikanAnime]
+    let data: [Anime]
     let pagination: JikanPagination?
 }
 
@@ -34,7 +34,7 @@ struct JikanItems: Codable {
     }
 }
 
-struct JikanAnime: Codable {
+struct Anime: Codable {
     let malId: Int
     let title: String
     let titleEnglish: String?
@@ -160,6 +160,6 @@ struct JikanStreaming: Codable {
     let name: String
     let url: String
 }
-extension JikanAnime: Identifiable {
+extension Anime: Identifiable {
     var id: Int { malId }
 }

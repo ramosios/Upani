@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AnimeDetailView: View {
-    let anime: JikanAnime
+    let anime: Anime
 
     var body: some View {
         ScrollView {

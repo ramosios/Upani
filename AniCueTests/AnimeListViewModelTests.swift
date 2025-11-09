@@ -30,8 +30,8 @@ final class AnimeListViewModelTests: XCTestCase {
         }
     }
 
-    private func dummyAnime(id: Int = 1, title: String = "Test") -> JikanAnime {
-        return JikanAnime(
+    private func dummyAnime(id: Int = 1, title: String = "Test") -> Anime {
+        return Anime(
             malId: id,
             title: title,
             titleEnglish: nil,

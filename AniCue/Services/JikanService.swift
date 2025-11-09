@@ -14,7 +14,7 @@ struct JikanService {
         self.session = session
     }
 
-    func searchAnime(title: String) async throws -> [JikanAnime] {
+    func searchAnime(title: String) async throws -> [Anime] {
         let query = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = "\(baseURL)/anime?q=\(query)&limit=10"
         guard let url = URL(string: urlString) else { throw JikanAPIError.invalidURL }
@@ -32,8 +32,8 @@ struct JikanService {
         }
     }
 
-    func fetchAnimes(for titles: [String]) async throws -> [JikanAnime] {
-        var all: [JikanAnime] = []
+    func fetchAnimes(for titles: [String]) async throws -> [Anime] {
+        var all: [Anime] = []
 
         for title in titles {
             let encoded = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""

@@ -9,7 +9,7 @@ import SwiftUI
 class MatchViewModel: ObservableObject {
     let source: String
     @ObservedObject var animeList = AnimeListManager.shared
-    @Published var animes: [JikanAnime] = []
+    @Published var animes: [Anime] = []
     @Published var cardOffsets: [Int: CGSize] = [:]
     @Published var errorMessage: String?
 
@@ -36,7 +36,7 @@ class MatchViewModel: ObservableObject {
         cardOffsets.removeValue(forKey: animeId)
     }
 
-    func swipeCard(for anime: JikanAnime) {
+    func swipeCard(for anime: Anime) {
         guard let index = animes.firstIndex(where: { $0.id == anime.id }) else { return }
         let direction: SwipeDirection = (cardOffsets[anime.id]?.width ?? 0) > 0 ? .right : .left
         withAnimation(.spring()) {

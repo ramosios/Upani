@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AnimeListView: View {
     @ObservedObject var animeList = AnimeListManager.shared
-    let animes: [JikanAnime]
+    let animes: [Anime]
     let source: AnimeListSource
 
     var title: String {
