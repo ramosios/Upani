@@ -101,31 +101,31 @@ class RealmAnime: Object {
         if !titleSynonyms.isEmpty {
             synonymsArray = Array(titleSynonyms)
         }
-        var studiosArray: [JikanEntity]?
+        var studiosArray: [Entity]?
         if !studios.isEmpty {
             studiosArray = studios.map { $0.toJikanEntity() }
         }
-        var producersArray: [JikanEntity]?
+        var producersArray: [Entity]?
         if !producers.isEmpty {
             producersArray = producers.map { $0.toJikanEntity() }
         }
-        var licensorsArray: [JikanEntity]?
+        var licensorsArray: [Entity]?
         if !licensors.isEmpty {
             licensorsArray = licensors.map { $0.toJikanEntity() }
         }
-        var genresArray: [JikanEntity]?
+        var genresArray: [Entity]?
         if !genres.isEmpty {
             genresArray = genres.map { $0.toJikanEntity() }
         }
-        var themesArray: [JikanEntity]?
+        var themesArray: [Entity]?
         if !themes.isEmpty {
             themesArray = themes.map { $0.toJikanEntity() }
         }
-        var demographicsArray: [JikanEntity]?
+        var demographicsArray: [Entity]?
         if !demographics.isEmpty {
             demographicsArray = demographics.map { $0.toJikanEntity() }
         }
-        var streamingArray: [JikanStreaming]?
+        var streamingArray: [Streaming]?
         if !streaming.isEmpty {
             streamingArray = streaming.map { $0.toJikanStreaming() }
         }
@@ -173,7 +173,7 @@ class RealmAnime: Object {
 class RealmImageFormats: EmbeddedObject {
     @Persisted var jpg: RealmImage?
     @Persisted var webp: RealmWebPImage?
-    convenience init(from formats: JikanImageFormats) {
+    convenience init(from formats: ImageFormats) {
         self.init()
         if let jpgImage = formats.jpg {
             self.jpg = RealmImage(from: jpgImage)
@@ -182,8 +182,8 @@ class RealmImageFormats: EmbeddedObject {
             self.webp = RealmWebPImage(from: webpImage)
         }
     }
-    func toJikanImageFormats() -> JikanImageFormats {
-        return JikanImageFormats(
+    func toJikanImageFormats() -> ImageFormats {
+        return ImageFormats(
             jpg: jpg?.toJikanImage(),
             webp: webp?.toJikanWebPImage()
         )
@@ -194,14 +194,14 @@ class RealmImage: EmbeddedObject {
     @Persisted var imageUrl: String?
     @Persisted var largeImageUrl: String?
     @Persisted var smallImageUrl: String?
-    convenience init(from image: JikanImage) {
+    convenience init(from image: AnimeImage) {
         self.init()
         self.imageUrl = image.imageUrl
         self.largeImageUrl = image.largeImageUrl
         self.smallImageUrl = image.smallImageUrl
     }
-    func toJikanImage() -> JikanImage {
-        return JikanImage(
+    func toJikanImage() -> AnimeImage {
+        return AnimeImage(
             imageUrl: imageUrl,
             largeImageUrl: largeImageUrl,
             smallImageUrl: smallImageUrl
@@ -213,14 +213,14 @@ class RealmWebPImage: EmbeddedObject {
     @Persisted var imageUrl: String?
     @Persisted var largeImageUrl: String?
     @Persisted var smallImageUrl: String?
-    convenience init(from image: JikanWebPImage) {
+    convenience init(from image: WebPImage) {
         self.init()
         self.imageUrl = image.imageUrl
         self.largeImageUrl = image.largeImageUrl
         self.smallImageUrl = image.smallImageUrl
     }
-    func toJikanWebPImage() -> JikanWebPImage {
-        return JikanWebPImage(
+    func toJikanWebPImage() -> WebPImage {
+        return WebPImage(
             imageUrl: imageUrl,
             largeImageUrl: largeImageUrl,
             smallImageUrl: smallImageUrl
@@ -234,7 +234,7 @@ class RealmTrailer: EmbeddedObject {
     @Persisted var url: String?
     @Persisted var embedUrl: String?
     @Persisted var images: RealmTrailerImage?
-    convenience init(from trailer: JikanTrailer) {
+    convenience init(from trailer: Trailer) {
         self.init()
         self.youtubeId = trailer.youtubeId
         self.url = trailer.url
@@ -243,8 +243,8 @@ class RealmTrailer: EmbeddedObject {
             self.images = RealmTrailerImage(from: trailerImages)
         }
     }
-    func toJikanTrailer() -> JikanTrailer {
-        return JikanTrailer(
+    func toJikanTrailer() -> Trailer {
+        return Trailer(
             youtubeId: youtubeId,
             url: url,
             embedUrl: embedUrl,
@@ -259,7 +259,7 @@ class RealmTrailerImage: EmbeddedObject {
     @Persisted var mediumImageUrl: String?
     @Persisted var largeImageUrl: String?
     @Persisted var maximumImageUrl: String?
-    convenience init(from image: JikanTrailerImage) {
+    convenience init(from image: TrailerImage) {
         self.init()
         self.imageUrl = image.imageUrl
         self.smallImageUrl = image.smallImageUrl
@@ -267,8 +267,8 @@ class RealmTrailerImage: EmbeddedObject {
         self.largeImageUrl = image.largeImageUrl
         self.maximumImageUrl = image.maximumImageUrl
     }
-    func toJikanTrailerImage() -> JikanTrailerImage {
-        return JikanTrailerImage(
+    func toJikanTrailerImage() -> TrailerImage {
+        return TrailerImage(
             imageUrl: imageUrl,
             smallImageUrl: smallImageUrl,
             mediumImageUrl: mediumImageUrl,
@@ -302,13 +302,13 @@ class RealmAiredPeriod: EmbeddedObject {
 class RealmEntity: EmbeddedObject {
     @Persisted var name: String
     @Persisted var malId: Int
-    convenience init(from entity: JikanEntity) {
+    convenience init(from entity: Entity) {
         self.init()
         self.name = entity.name
         self.malId = entity.malId
     }
-    func toJikanEntity() -> JikanEntity {
-        return JikanEntity(malId: malId, name: name)
+    func toJikanEntity() -> Entity {
+        return Entity(malId: malId, name: name)
     }
 }
 
@@ -318,15 +318,15 @@ class RealmBroadcast: EmbeddedObject {
     @Persisted var time: String?
     @Persisted var timezone: String?
     @Persisted var string: String?
-    convenience init(from broadcast: JikanBroadcast) {
+    convenience init(from broadcast: Broadcast) {
         self.init()
         self.day = broadcast.day
         self.time = broadcast.time
         self.timezone = broadcast.timezone
         self.string = broadcast.string
     }
-    func toJikanBroadcast() -> JikanBroadcast {
-        return JikanBroadcast(
+    func toJikanBroadcast() -> Broadcast {
+        return Broadcast(
             day: day,
             time: time,
             timezone: timezone,
@@ -339,13 +339,13 @@ class RealmBroadcast: EmbeddedObject {
 class RealmStreaming: EmbeddedObject {
     @Persisted var name: String
     @Persisted var url: String
-    convenience init(from streaming: JikanStreaming) {
+    convenience init(from streaming: Streaming) {
         self.init()
         self.name = streaming.name
         self.url = streaming.url
     }
-    func toJikanStreaming() -> JikanStreaming {
-        return JikanStreaming(
+    func toJikanStreaming() -> Streaming {
+        return Streaming(
             name: name,
             url: url
         )

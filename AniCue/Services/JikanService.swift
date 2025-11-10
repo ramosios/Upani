@@ -25,7 +25,7 @@ struct JikanService {
         }
 
         do {
-            let decoded = try JSONDecoder().decode(JikanAnimeListResponse.self, from: data)
+            let decoded = try JSONDecoder().decode(AnimeListResponse.self, from: data)
             return decoded.data
         } catch {
             throw JikanAPIError.decodingFailed
@@ -49,7 +49,7 @@ struct JikanService {
                     throw JikanBatchError.serverError(title: title, message: message)
                 }
 
-                let result = try JSONDecoder().decode(JikanAnimeListResponse.self, from: data)
+                let result = try JSONDecoder().decode(AnimeListResponse.self, from: data)
 
                 if let firstTV = result.data.first(where: { $0.type == "TV" }) {
                     all.append(firstTV)

@@ -4,16 +4,16 @@ struct AnimeResponse: Codable {
     let data: Anime
 }
 
-struct JikanAnimeListResponse: Codable {
+struct AnimeListResponse: Codable {
     let data: [Anime]
-    let pagination: JikanPagination?
+    let pagination: Pagination?
 }
 
-struct JikanPagination: Codable {
+struct Pagination: Codable {
     let lastVisiblePage: Int?
     let hasNextPage: Bool?
     let currentPage: Int?
-    let items: JikanItems?
+    let items: Items?
 
     enum CodingKeys: String, CodingKey {
         case lastVisiblePage = "last_visible_page"
@@ -23,7 +23,7 @@ struct JikanPagination: Codable {
     }
 }
 
-struct JikanItems: Codable {
+struct Items: Codable {
     let count: Int?
     let total: Int?
     let perPage: Int?
@@ -50,18 +50,18 @@ struct Anime: Codable {
     let popularity: Int?
     let members: Int?
     let favorites: Int?
-    let images: JikanImageFormats?
-    let trailer: JikanTrailer?
+    let images: ImageFormats?
+    let trailer: Trailer?
     let aired: AiredPeriod?
-    let studios: [JikanEntity]?
-    let producers: [JikanEntity]?
-    let licensors: [JikanEntity]?
-    let genres: [JikanEntity]?
-    let themes: [JikanEntity]?
-    let demographics: [JikanEntity]?
+    let studios: [Entity]?
+    let producers: [Entity]?
+    let licensors: [Entity]?
+    let genres: [Entity]?
+    let themes: [Entity]?
+    let demographics: [Entity]?
     let source: String?
-    let broadcast: JikanBroadcast?
-    let streaming: [JikanStreaming]?
+    let broadcast: Broadcast?
+    let streaming: [Streaming]?
 
     enum CodingKeys: String, CodingKey {
         case malId = "mal_id"
@@ -74,12 +74,12 @@ struct Anime: Codable {
     }
 }
 
-struct JikanImageFormats: Codable {
-    let jpg: JikanImage?
-    let webp: JikanWebPImage?
+struct ImageFormats: Codable {
+    let jpg: AnimeImage?
+    let webp: WebPImage?
 }
 
-struct JikanImage: Codable {
+struct AnimeImage: Codable {
     let imageUrl: String?
     let largeImageUrl: String?
     let smallImageUrl: String?
@@ -91,7 +91,7 @@ struct JikanImage: Codable {
     }
 }
 
-struct JikanWebPImage: Codable {
+struct WebPImage: Codable {
     let imageUrl: String?
     let largeImageUrl: String?
     let smallImageUrl: String?
@@ -103,11 +103,11 @@ struct JikanWebPImage: Codable {
     }
 }
 
-struct JikanTrailer: Codable {
+struct Trailer: Codable {
     let youtubeId: String?
     let url: String?
     let embedUrl: String?
-    let images: JikanTrailerImage?
+    let images: TrailerImage?
 
     enum CodingKeys: String, CodingKey {
         case youtubeId = "youtube_id"
@@ -117,7 +117,7 @@ struct JikanTrailer: Codable {
     }
 }
 
-struct JikanTrailerImage: Codable {
+struct TrailerImage: Codable {
     let imageUrl: String?
     let smallImageUrl: String?
     let mediumImageUrl: String?
@@ -139,7 +139,7 @@ struct AiredPeriod: Codable {
     let string: String?
 }
 
-struct JikanEntity: Codable {
+struct Entity: Codable {
     let malId: Int
     let name: String
 
@@ -149,14 +149,14 @@ struct JikanEntity: Codable {
     }
 }
 
-struct JikanBroadcast: Codable {
+struct Broadcast: Codable {
     let day: String?
     let time: String?
     let timezone: String?
     let string: String?
 }
 
-struct JikanStreaming: Codable {
+struct Streaming: Codable {
     let name: String
     let url: String
 }
