@@ -72,8 +72,6 @@ struct JikanService {
     }
 }
 
-extension JikanService: JikanServiceProtocol {}
-
 enum JikanAPIError: Error, LocalizedError, Equatable {
     case invalidURL
     case requestFailed

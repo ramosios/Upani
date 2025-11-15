@@ -126,4 +126,3 @@ class OpenAIService {
         }
     }
 }
-extension OpenAIService: OpenAIServiceProtocol {}

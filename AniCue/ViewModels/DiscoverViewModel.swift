@@ -15,10 +15,9 @@ class DiscoverViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var noRecommendations = false
     @ObservedObject var userPreferences = UserPreferencesViewModel.shared
-    private let openAIService: OpenAIServiceProtocol
-    init(openAIService: OpenAIServiceProtocol = OpenAIService(),
-         jikaService: JikanServiceProtocol = JikanService()) {
-        self.openAIService = openAIService
+    private let openAIService: OpenAIService
+    init() {
+        self.openAIService = OpenAIService()
     }
     func getRecommendations(for prompt: String) async {
         isLoading = true
