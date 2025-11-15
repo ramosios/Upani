@@ -6,7 +6,7 @@ protocol NetworkSession {
 
 extension URLSession: NetworkSession {}
 
-struct JikanService {
+struct AnimeService {
     private let baseURL = "https://api.jikan.moe/v4"
     private let session: NetworkSession
 
