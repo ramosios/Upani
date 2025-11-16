@@ -6,7 +6,8 @@ struct Constants {
     static let minimumFilterScore = 5.0
     static let menuItem = [
         MenuItem(name: "Matching", imageName: "UpaniBackground_Image3"),
-        MenuItem(name: "Search", imageName: "UpaniBackground_Image3")
+        MenuItem(name: "Search", imageName: "UpaniBackground_Image3"),
+        MenuItem(name: "New Anime", imageName: "UpaniBackground_Image3")
     ]
     static let matchingMenuItem = [
         MenuItem(name: "Best Rated", imageName: "UpaniBackground_Image3"),

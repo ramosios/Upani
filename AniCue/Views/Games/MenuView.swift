@@ -33,6 +33,8 @@ struct MenuView: View {
                     MenuView(sourceType: .match)
                 case "Search":
                     SearchView()
+                case "New Anime":
+                    NewAnimeView()
                 default:
                     MenuView(sourceType: .mainMenu)
                 }
