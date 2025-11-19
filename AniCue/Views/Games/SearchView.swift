@@ -8,8 +8,7 @@ import SwiftUI
 
 struct SearchView: View {
     @ObservedObject var animeList = AnimeListManager.shared
-    @State private var searchText: String = ""
-    @State private var filteredAnimes: [Anime] = []
+    @StateObject private var viewModel = SearchViewModel()
 
     var body: some View {
             NavigationStack {
@@ -18,8 +17,8 @@ struct SearchView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
-                        TextField("Search for anime...", text: $searchText, onCommit: {
-                            filterAnimes()
+                        TextField("Search for anime...", text: $viewModel.searchText, onCommit: {
+                            viewModel.filterAnimes()
                         })
                         .foregroundColor(.primary)
                         .autocapitalization(.none)
@@ -32,7 +31,7 @@ struct SearchView: View {
                     .padding(.horizontal)
 
                     // Search Results
-                    if filteredAnimes.isEmpty {
+                    if viewModel.filteredAnimes.isEmpty {
                         Spacer()
                         VStack {
                             Image(systemName: "exclamationmark.triangle")
@@ -44,7 +43,7 @@ struct SearchView: View {
                         }
                         Spacer()
                     } else {
-                        List(filteredAnimes, id: \.malId) { anime in
+                        List(viewModel.filteredAnimes, id: \.malId) { anime in
                             NavigationLink(destination: AnimeDetailView(anime: anime)) {
                                 AnimeRowView(
                                     anime: anime,
@@ -81,16 +80,6 @@ struct SearchView: View {
                     }
                 }
                 .navigationTitle("Search Anime")
-        }
-    }
-
-    private func filterAnimes() {
-        if searchText.isEmpty {
-            filteredAnimes = []
-            return
-        }
-        filteredAnimes = animeList.getAnimes(for: .downloaded).filter { anime in
-            anime.title.localizedCaseInsensitiveContains(searchText)
         }
     }
 }
