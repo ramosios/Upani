@@ -17,8 +17,6 @@ class SearchViewModel: ObservableObject {
             filteredAnimes = []
             return
         }
-        filteredAnimes = animeList.getAnimes(for: .downloaded).filter { anime in
-            anime.title.localizedCaseInsensitiveContains(searchText)
-        }
+        filteredAnimes = animeList.getFilteredAnime(numberOfResults: 50, searchText: searchText)
     }
 }

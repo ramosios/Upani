@@ -68,10 +68,12 @@ class AnimeListManager: ObservableObject {
         let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
         return objects.map { $0.toJikanAnime() }
     }
-    func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil) -> [Anime] {
+    func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil,searchText: String?=nil) -> [Anime] {
         var results = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
-
+        if let searchText = searchText, !searchText.isEmpty {
+            results = results.filter("title CONTAINS[c] %@", searchText)
+        }
         if let genreId = genreId {
             let genreIdString = String(genreId)
             results = results.filter("combinedGenresId CONTAINS %@", genreIdString)
