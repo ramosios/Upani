@@ -103,31 +103,31 @@ class RealmAnime: Object {
         }
         var studiosArray: [Entity]?
         if !studios.isEmpty {
-            studiosArray = studios.map { $0.toJikanEntity() }
+            studiosArray = studios.map { $0.toAnimeEntity() }
         }
         var producersArray: [Entity]?
         if !producers.isEmpty {
-            producersArray = producers.map { $0.toJikanEntity() }
+            producersArray = producers.map { $0.toAnimeEntity() }
         }
         var licensorsArray: [Entity]?
         if !licensors.isEmpty {
-            licensorsArray = licensors.map { $0.toJikanEntity() }
+            licensorsArray = licensors.map { $0.toAnimeEntity() }
         }
         var genresArray: [Entity]?
         if !genres.isEmpty {
-            genresArray = genres.map { $0.toJikanEntity() }
+            genresArray = genres.map { $0.toAnimeEntity() }
         }
         var themesArray: [Entity]?
         if !themes.isEmpty {
-            themesArray = themes.map { $0.toJikanEntity() }
+            themesArray = themes.map { $0.toAnimeEntity() }
         }
         var demographicsArray: [Entity]?
         if !demographics.isEmpty {
-            demographicsArray = demographics.map { $0.toJikanEntity() }
+            demographicsArray = demographics.map { $0.toAnimeEntity() }
         }
         var streamingArray: [Streaming]?
         if !streaming.isEmpty {
-            streamingArray = streaming.map { $0.toJikanStreaming() }
+            streamingArray = streaming.map { $0.toAnimeStreaming() }
         }
         return Anime(
             malId: malId,
@@ -145,8 +145,8 @@ class RealmAnime: Object {
             popularity: popularity,
             members: members,
             favorites: favorites,
-            images: images?.toJikanImageFormats(),
-            trailer: trailer?.toJikanTrailer(),
+            images: images?.toAnimeImageFormats(),
+            trailer: trailer?.toAnimeTrailer(),
             aired: aired?.toAiredPeriod(),
             studios: studiosArray,
             producers: producersArray,
@@ -155,7 +155,7 @@ class RealmAnime: Object {
             themes: themesArray,
             demographics: demographicsArray,
             source: source,
-            broadcast: broadcast?.toJikanBroadcast(),
+            broadcast: broadcast?.toAnimeBroadcast(),
             streaming: streamingArray
         )
     }
@@ -182,10 +182,10 @@ class RealmImageFormats: EmbeddedObject {
             self.webp = RealmWebPImage(from: webpImage)
         }
     }
-    func toJikanImageFormats() -> ImageFormats {
+    func toAnimeImageFormats() -> ImageFormats {
         return ImageFormats(
-            jpg: jpg?.toJikanImage(),
-            webp: webp?.toJikanWebPImage()
+            jpg: jpg?.toAnimeImage(),
+            webp: webp?.toAnimeWebPImage()
         )
     }
 }
@@ -200,7 +200,7 @@ class RealmImage: EmbeddedObject {
         self.largeImageUrl = image.largeImageUrl
         self.smallImageUrl = image.smallImageUrl
     }
-    func toJikanImage() -> AnimeImage {
+    func toAnimeImage() -> AnimeImage {
         return AnimeImage(
             imageUrl: imageUrl,
             largeImageUrl: largeImageUrl,
@@ -219,7 +219,7 @@ class RealmWebPImage: EmbeddedObject {
         self.largeImageUrl = image.largeImageUrl
         self.smallImageUrl = image.smallImageUrl
     }
-    func toJikanWebPImage() -> WebPImage {
+    func toAnimeWebPImage() -> WebPImage {
         return WebPImage(
             imageUrl: imageUrl,
             largeImageUrl: largeImageUrl,
@@ -243,12 +243,12 @@ class RealmTrailer: EmbeddedObject {
             self.images = RealmTrailerImage(from: trailerImages)
         }
     }
-    func toJikanTrailer() -> Trailer {
+    func toAnimeTrailer() -> Trailer {
         return Trailer(
             youtubeId: youtubeId,
             url: url,
             embedUrl: embedUrl,
-            images: images?.toJikanTrailerImage()
+            images: images?.toAnimeTrailerImage()
         )
     }
 }
@@ -267,7 +267,7 @@ class RealmTrailerImage: EmbeddedObject {
         self.largeImageUrl = image.largeImageUrl
         self.maximumImageUrl = image.maximumImageUrl
     }
-    func toJikanTrailerImage() -> TrailerImage {
+    func toAnimeTrailerImage() -> TrailerImage {
         return TrailerImage(
             imageUrl: imageUrl,
             smallImageUrl: smallImageUrl,
@@ -307,7 +307,7 @@ class RealmEntity: EmbeddedObject {
         self.name = entity.name
         self.malId = entity.malId
     }
-    func toJikanEntity() -> Entity {
+    func toAnimeEntity() -> Entity {
         return Entity(malId: malId, name: name)
     }
 }
@@ -325,7 +325,7 @@ class RealmBroadcast: EmbeddedObject {
         self.timezone = broadcast.timezone
         self.string = broadcast.string
     }
-    func toJikanBroadcast() -> Broadcast {
+    func toAnimeBroadcast() -> Broadcast {
         return Broadcast(
             day: day,
             time: time,
@@ -344,7 +344,7 @@ class RealmStreaming: EmbeddedObject {
         self.name = streaming.name
         self.url = streaming.url
     }
-    func toJikanStreaming() -> Streaming {
+    func toAnimeStreaming() -> Streaming {
         return Streaming(
             name: name,
             url: url
