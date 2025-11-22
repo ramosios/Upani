@@ -17,12 +17,13 @@ struct SearchView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
-                        TextField("Search for anime...", text: $viewModel.searchText, onCommit: {
-                            viewModel.filterAnimes()
-                        })
-                        .foregroundColor(.primary)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
+                        TextField("Search for anime...", text: $viewModel.searchText)
+                            .foregroundColor(.primary)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .onChange(of: viewModel.searchText) { _, _ in
+                                viewModel.debouncedFilter()
+                            }
                     }
                     .padding(12)
                     .background(Color(.secondarySystemBackground))
