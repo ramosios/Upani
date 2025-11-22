@@ -96,7 +96,7 @@ class RealmAnime: Object {
         // Update combined genres id after all entities are populated
         updateCombinedGenresId()
     }
-    func toJikanAnime() -> Anime {
+    func toAnime() -> Anime {
         var synonymsArray: [String]?
         if !titleSynonyms.isEmpty {
             synonymsArray = Array(titleSynonyms)

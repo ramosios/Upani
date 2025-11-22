@@ -66,18 +66,21 @@ class AnimeListManager: ObservableObject {
 
     func getAnimes(for listType: AnimeListType) -> [Anime] {
         let objects = realm.objects(RealmAnime.self).filter("listType == %@", listType.rawValue)
-        return objects.map { $0.toJikanAnime() }
+        return objects.map { $0.toAnime() }
     }
     func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil,searchText: String?=nil) -> [Anime] {
         var results = realm.objects(RealmAnime.self)
             .filter("listType == %@", AnimeListType.downloaded.rawValue)
+        // Filter for anime search by name
         if let searchText = searchText, !searchText.isEmpty {
             results = results.filter("title CONTAINS[c] %@", searchText)
         }
+        // Filter for all genres
         if let genreId = genreId {
             let genreIdString = String(genreId)
             results = results.filter("combinedGenresId CONTAINS %@", genreIdString)
         }
+        // Apply user preference filters
         if let filterAnswers = filterAnswers {
             let filters = formatUserPreference(from: filterAnswers)
             if !filters.format.isEmpty {
@@ -90,9 +93,10 @@ class AnimeListManager: ObservableObject {
                 results = results.filter("aired.from >= %@ AND aired.from <= %@", filters.startDate, filters.endDate)
             }
         }
+        // Filter by eitheri popularity or score
         let sortKey = (filterByPopularity == true) ? "members" : "score"
         let sortedResults = results.sorted(byKeyPath: sortKey, ascending: false)
-        return Array(sortedResults.prefix(numberOfResults)).map { $0.toJikanAnime() }
+        return Array(sortedResults.prefix(numberOfResults)).map { $0.toAnime() }
     }
     func isAnimeInList(_ anime: Anime, listType: AnimeListType) -> Bool {
         guard let object = realm.object(ofType: RealmAnime.self, forPrimaryKey: anime.malId) else { return false }
