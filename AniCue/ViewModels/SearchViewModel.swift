@@ -28,6 +28,6 @@ class SearchViewModel: ObservableObject {
             filteredAnimes = []
             return
         }
-        filteredAnimes = animeList.getFilteredAnime(numberOfResults: 50, searchText: searchText)
+        filteredAnimes = animeList.getSearchedAnime(searchText: searchText, numberOfResults: 50)
     }
 }
