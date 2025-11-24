@@ -11,7 +11,7 @@ import RealmSwift
 enum AnimeListType: String, PersistableEnum {
     case watched
     case watchlist
-    case downloaded
+    case none
 }
 
 // MARK: - Main Anime Model

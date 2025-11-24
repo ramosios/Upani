@@ -9,6 +9,7 @@ class AnimeListManager: ObservableObject {
     @Published var watched: [Anime] = []
 
     private init() {
+        RealmDatabaseGenerator.generatePreloadedDatabase()
         if let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL {
             let isFirstLaunch = !FileManager.default.fileExists(atPath: defaultRealmURL.path)
             if isFirstLaunch {
@@ -75,7 +76,7 @@ class AnimeListManager: ObservableObject {
     }
     func getFilteredAnime(forGenreId genreId: Int? = nil,filterAnswers: [String]? = nil, numberOfResults: Int,filterByPopularity: Bool? = nil) -> [Anime] {
         var results = realm.objects(RealmAnime.self)
-            .filter("listType == %@", AnimeListType.downloaded.rawValue)
+            .filter("listType == %@", AnimeListType.none.rawValue)
         // Filter for all genres
         if let genreId = genreId {
             let genreIdString = String(genreId)
@@ -113,7 +114,7 @@ class AnimeListManager: ObservableObject {
             watchlist = getAnimes(for: .watchlist)
         case .watched:
             watched = getAnimes(for: .watched)
-        case .downloaded:
+        case .none:
             break
         }
     }
