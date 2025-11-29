@@ -9,7 +9,6 @@ class AnimeListManager: ObservableObject {
     @Published var watched: [Anime] = []
 
     private init() {
-        RealmDatabaseGenerator.generatePreloadedDatabase()
         if let defaultRealmURL = Realm.Configuration.defaultConfiguration.fileURL {
             let isFirstLaunch = !FileManager.default.fileExists(atPath: defaultRealmURL.path)
             if isFirstLaunch {
