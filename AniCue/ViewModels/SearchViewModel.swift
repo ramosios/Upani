@@ -10,7 +10,7 @@ class SearchViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var filteredAnimes: [Anime] = []
 
-    private var animeList = AnimeListManager.shared
+    var animeList = AnimeListManager.shared
     private var debounceTask: Task<Void, Never>?
 
     func debouncedFilter() {

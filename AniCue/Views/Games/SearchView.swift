@@ -7,7 +7,6 @@
 import SwiftUI
 
 struct SearchView: View {
-    @ObservedObject var animeList = AnimeListManager.shared
     @StateObject private var viewModel = SearchViewModel()
 
     var body: some View {
@@ -48,23 +47,23 @@ struct SearchView: View {
                             NavigationLink(destination: AnimeDetailView(anime: anime)) {
                                 AnimeRowView(
                                     anime: anime,
-                                    isWatchlisted: animeList.isAnimeInList(anime, listType: .watchlist),
-                                    isWatched: animeList.isAnimeInList(anime, listType: .watched),
+                                    isWatchlisted: viewModel.animeList.isAnimeInList(anime, listType: .watchlist),
+                                    isWatched: viewModel.animeList.isAnimeInList(anime, listType: .watched),
                                     onToggleWatchlisted: {
                                         withAnimation {
-                                            if animeList.isAnimeInList(anime, listType: .watchlist) {
-                                                animeList.removeAnime(anime)
+                                            if viewModel.animeList.isAnimeInList(anime, listType: .watchlist) {
+                                                viewModel.animeList.removeAnime(anime)
                                             } else {
-                                                animeList.addOrUpdateAnime(anime, listType: .watchlist)
+                                                viewModel.animeList.addOrUpdateAnime(anime, listType: .watchlist)
                                             }
                                         }
                                     },
                                     onMarkWatched: {
                                         withAnimation {
-                                            if animeList.isAnimeInList(anime, listType: .watched) {
-                                                animeList.removeAnime(anime)
+                                            if viewModel.animeList.isAnimeInList(anime, listType: .watched) {
+                                                viewModel.animeList.removeAnime(anime)
                                             } else {
-                                                animeList.addOrUpdateAnime(anime, listType: .watched)
+                                                viewModel.animeList.addOrUpdateAnime(anime, listType: .watched)
                                             }
                                         }
                                     }
